@@ -68,7 +68,7 @@ def run_game():
     global make_jump
     cactus_arr = []
     create_cactus_arr(cactus_arr)
-    land = pygame.image.load('Png/Fon.png')     #Фон игры
+    land = pygame.image.load('Png/ Fon.png')     #Фон игры
 
     stone, cloud = open_random_objects()
 
