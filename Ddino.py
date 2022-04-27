@@ -11,15 +11,15 @@ display_width = 800
 display_height = 600
 
 display = pygame.display.set_mode((display_width,display_height))
-icon = pygame.image.load('Dino.png')
+icon = pygame.image.load('Png/Dino.png')
 
 pygame.display.set_icon(icon)
 
-cactus_img = [pygame.image.load("Rukzak.png"),pygame.image.load("Gorshok.png"),pygame.image.load("Styl.png")]
+cactus_img = [pygame.image.load("Png/Rukzak.png"),pygame.image.load("Png/Gorshok.png"),pygame.image.load("Png/Styl.png")]
 cactus_opt = [40,430,60,430,50,450]
 
-stone_img = [pygame.image.load("Stone.png"),pygame.image.load("Stone2.png")]
-cloud_img = [pygame.image.load("Cloud.png"),pygame.image.load("Cloud1.png")]
+stone_img = [pygame.image.load("Png/Stone.png"),pygame.image.load("Png/Stone2.png")]
+cloud_img = [pygame.image.load("Png/Cloud.png"),pygame.image.load("Png/Cloud1.png")]
 class Object:
     def __init__(self, x, y, width, image, speed):
         self.x = x
@@ -68,7 +68,7 @@ def run_game():
     global make_jump
     cactus_arr = []
     create_cactus_arr(cactus_arr)
-    land = pygame.image.load('Fon.png')     #Фон игры
+    land = pygame.image.load('Png/Fon.png')     #Фон игры
 
     stone, cloud = open_random_objects()
 
