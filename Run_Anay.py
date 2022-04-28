@@ -4,6 +4,9 @@ import random
 
 pygame.init()
 clock = pygame.time.Clock()
+fps = 10
+x = 50
+y = 50
 
 def display_game(width, height, title='Аня убегай!!!'):
     """Функция размера дисплея, цвета, icon и заголовкq"""
@@ -25,8 +28,10 @@ def quit_game():
         quit()
 
 def user(user_x=400):
-    # user_x = 400
-    # user_y = 350
+    if user_x < 1000:
+        user_x += 10
+    else:
+        user_x = 200
     return user_x
 
 def user2(user_height = 90):
@@ -35,26 +40,33 @@ def user2(user_height = 90):
     return user_width,user_height
 
 def jump_user():
-
+    global x,y,fps
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_SPACE]:
-        xx(500)
+    if keys[pygame.K_w]:
+        y -= 3
+    if keys[pygame.K_s]:
+        y += 3
+    if keys[pygame.K_a]:
+        x -= 3
+    if keys[pygame.K_d]:
+        x += 3
+    if keys[pygame.K_q]:
+        fps += 5
 
-def xx(x=500):
-    return x
 
 def run_game():
     """"Основная функция игры"""
 
     while True:
+        global x,y,fps
         quit_game()
         jump_user()
 
-        pygame.draw.rect(display_game(800, 600), ("Orange"),((xx(),100),user2()))    # Рисуем персонажа
+        pygame.draw.rect(display_game(800, 600), ("Orange"), ((100,50), user2()))    # Рисуем персонажа
 
         pygame.display.update()
 
-        clock.tick(20)
+        clock.tick(fps)
 
 
 run_game()
