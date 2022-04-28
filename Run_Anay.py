@@ -1,12 +1,13 @@
 import pygame
 import random
 
-
 pygame.init()
 clock = pygame.time.Clock()
-fps = 10
+fps = 40
 x = 50
-y = 50
+y = 300
+make_jump = False
+jump_count = 30
 
 def display_game(width, height, title='Аня убегай!!!'):
     """Функция размера дисплея, цвета, icon и заголовкq"""
@@ -27,19 +28,13 @@ def quit_game():
     if keys[pygame.K_ESCAPE]:  # Пробел
         quit()
 
-def user(user_x=400):
-    if user_x < 1000:
-        user_x += 10
-    else:
-        user_x = 200
-    return user_x
 
 def user2(user_height = 90):
     user_width = 60
     user_height = 90
     return user_width,user_height
 
-def jump_user():
+def key_user():
     global x,y,fps
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
@@ -54,18 +49,42 @@ def jump_user():
         fps += 5
 
 
+def jump_user():
+    """   Функция прыжка    """
+    global y,make_jump,jump_count
+
+    if jump_count >= -30:
+        y -= jump_count /3
+        jump_count -= 1
+    else:
+        jump_count = 30
+        make_jump = False
+
+def jump_start():
+    global make_jump
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE]:
+        make_jump = True
+    if make_jump:
+        jump_user()
+
 def run_game():
     """"Основная функция игры"""
 
     while True:
-        global x,y,fps
+        global x,y,fps,make_jump
         quit_game()
-        jump_user()
+        key_user()
+        jump_start()
+        # keys = pygame.key.get_pressed()
+        # if keys[pygame.K_SPACE]:
+        #     make_jump = True
+        # if make_jump:
+        #     jump_user()
+        pygame.draw.rect(display_game(800, 600), ("Orange"), ((x,y), user2()))    # Рисуем персонажа
 
-        pygame.draw.rect(display_game(800, 600), ("Orange"), ((100,50), user2()))    # Рисуем персонажа
 
         pygame.display.update()
-
         clock.tick(fps)
 
 
