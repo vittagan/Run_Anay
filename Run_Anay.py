@@ -3,11 +3,13 @@ import random
 
 pygame.init()
 clock = pygame.time.Clock()
-fps = 40
-x = 50
-y = 300
+fps = 40                        # Скорость
+x = 50                          # Х координата персонажа
+y = 300                         # у координата персонажа
 make_jump = False
-jump_count = 30
+jump_count = 30                 # Высота прыжка
+count = 0                       # Счётчик анимации персонажа
+
 
 def display_game(width, height, title='Аня убегай!!!'):
     """Функция размера дисплея, цвета, icon и заголовкq"""
@@ -28,8 +30,8 @@ def quit_game():
     if keys[pygame.K_ESCAPE]:  # Пробел
         quit()
 
-
-def user2(user_height = 90):
+def user2():
+    """Размер персонажа"""
     user_width = 60
     user_height = 90
     return user_width,user_height
@@ -47,7 +49,8 @@ def key_user():
         x += 3
     if keys[pygame.K_q]:
         fps += 5
-
+    if keys[pygame.K_z]:
+        fps -= 5
 
 def jump_user():
     """   Функция прыжка    """
@@ -61,6 +64,7 @@ def jump_user():
         make_jump = False
 
 def jump_start():
+    """Запускает прыжок"""
     global make_jump
     keys = pygame.key.get_pressed()
     if keys[pygame.K_SPACE]:
@@ -68,11 +72,24 @@ def jump_start():
     if make_jump:
         jump_user()
 
+
+def user_anim():
+    global count
+    if count == 36:
+        count = 0
+    user_img = [pygame.image.load("anim/1.png"), pygame.image.load("anim/2.png"), pygame.image.load("anim/3.png"),
+                 pygame.image.load("anim/4.png"), pygame.image.load("anim/5.png"), pygame.image.load("anim/6.png"),
+                 pygame.image.load("anim/7.png"), pygame.image.load("anim/8.png"), pygame.image.load("anim/9.png"),
+                 pygame.image.load("anim/10.png"), pygame.image.load("anim/11.png"), pygame.image.load("anim/12.png")]
+
+    display_game(800, 600).blit(user_img[count // 3],((x,y),user2()))    # Рисуем персонажа
+    count += 1
+
 def run_game():
     """"Основная функция игры"""
 
     while True:
-        global x,y,fps,make_jump
+        global x,y,fps
         quit_game()
         key_user()
         jump_start()
@@ -81,8 +98,8 @@ def run_game():
         #     make_jump = True
         # if make_jump:
         #     jump_user()
-        pygame.draw.rect(display_game(800, 600), ("Orange"), ((x,y), user2()))    # Рисуем персонажа
-
+        # pygame.draw.rect(display_game(800, 600), ("Orange"), ((x,y), user2()))    # Рисуем персонажа
+        user_anim()
 
         pygame.display.update()
         clock.tick(fps)
