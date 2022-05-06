@@ -51,6 +51,9 @@ def key_user():
         fps += 5
     if keys[pygame.K_z]:
         fps -= 5
+    if keys[pygame.K_p]:
+        pause()
+
 
 def jump_user():
     """   Функция прыжка    """
@@ -62,6 +65,37 @@ def jump_user():
     else:
         jump_count = 30
         make_jump = False
+
+def print_text(message, x, y, font_color=(0,0,0), font_style="Shrift.ttf", font_size=30):
+    """
+    Функция вывода текста на экран
+    :param message: Текст сообщения
+    :param x: Расположение на экране по Х
+    :param y: Расположение на экране по Н
+    :param font_color: Цвет текста
+    :param font_style: Шрифт
+    :param font_size: Размер текста
+    :return:
+    """
+    font_style = pygame.font.Font(font_style,font_size)
+    text = font_style.render(message,True,font_color)
+    display_game(200,200).blit(text,(x,y))
+
+def pause():
+    pause = True
+    while pause:
+        for event in pygame.event.get():  # Выход на крестик
+            if event.type == pygame.QUIT:
+                pygame.QUIT
+                quit()
+
+        keys = pygame.key.get_pressed()  # Функция обработки нажатия клавиш
+        print("pause!!!, чтобы продолжить нажми О")
+        if keys[pygame.K_o]:  # o
+            pause = False
+
+        pygame.display.update()
+        clock.tick(10)
 
 def jump_start():
     """Запускает прыжок"""
@@ -93,14 +127,7 @@ def run_game():
         quit_game()
         key_user()
         jump_start()
-        # keys = pygame.key.get_pressed()
-        # if keys[pygame.K_SPACE]:
-        #     make_jump = True
-        # if make_jump:
-        #     jump_user()
-        # pygame.draw.rect(display_game(800, 600), ("Orange"), ((x,y), user2()))    # Рисуем персонажа
         user_anim()
-
         pygame.display.update()
         clock.tick(fps)
 
